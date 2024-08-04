@@ -1,0 +1,19 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MurmurDetector" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="android:statusBarColor">@color/primary</item>
+    </style>
+
+    <style name="Theme.MurmurDetector" parent="Base.Theme.MurmurDetector" />
+
+    <style name="RoundedCornersDialog" parent="@style/Theme.Material3.DayNight.Dialog.Alert">
+        <item name="dialogCornerRadius">16dp</item>
+    </style>
+
+    <style name="TransparentDialog" parent="RoundedCornersDialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+</resources>

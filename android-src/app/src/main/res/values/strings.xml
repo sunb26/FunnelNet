@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Murmur Detector</string>
+    <string name="please_wait">Please Wait</string>
+    <string name="please_try_after_some_time">Please try after some time!</string>
+    <string name="select_an_audio_file_to_predict">Select an audio file to predict</string>
+    <string name="waiting_to_be_preprocessed">Waiting to be preprocessed…</string>
+    <string name="please_try_again">Please try again!</string>
+    <string name="making_inference">Making inference…</string>
+    <string name="inference_completed">Inference completed!</string>
+</resources>
