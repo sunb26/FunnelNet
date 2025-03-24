@@ -27,7 +27,7 @@ async def filter_audio(audio: UploadFile = File(...)):
         processed_audio_buffer = await dsp(buffer)
         
         print("Finished filtering audio...")
-        return StreamingResponse(processed_audio_buffer, media_type="audio/wav")
+        return StreamingResponse(processed_audio_buffer)
     except Exception as e:
         return {"error": str(e)}
 
