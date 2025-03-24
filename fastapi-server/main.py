@@ -19,7 +19,7 @@ def ping():
     return { "msg": "Help" }
 
 @app.post("/filter_audio")
-async def filter_audio(filename: str, audio: UploadFile = File(...)):
+async def filter_audio(audio: UploadFile = File(...)):
     try:
         buffer = io.BytesIO(await audio.read())
         
