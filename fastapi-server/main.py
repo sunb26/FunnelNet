@@ -1,9 +1,12 @@
+import io
 import json
 import os
 
 from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import StreamingResponse
 
 from sig import preprocess_audio
+from dsp import dsp
 
 app = FastAPI()
 
@@ -13,7 +16,20 @@ def read_root():
 
 @app.get("/ping")
 def ping():
-    return { "msg": "alive" }
+    return { "msg": "Help" }
+
+@app.post("/filter_audio")
+async def filter_audio(filename: str, audio: UploadFile = File(...)):
+    try:
+        buffer = io.BytesIO(await audio.read())
+        
+        print("Processing audio...")
+        processed_audio_buffer = await dsp(buffer)
+        
+        print("Finished filtering audio...")
+        return StreamingResponse(processed_audio_buffer, media_type="audio/wav")
+    except Exception as e:
+        return {"error": str(e)}
 
 @app.post("/process_audio")
 async def process_audio(audio: UploadFile = File(...)):
