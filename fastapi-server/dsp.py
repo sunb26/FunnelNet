@@ -24,6 +24,16 @@ def write_wav(signal_data, sample_rate):
     output_stream.seek(0) # Reset the stream position to beginnning
     return output_stream
 
+def trim(sample_rate, signal_data, trim_length):
+    remove = sample_rate * trim_length
+    if len(signal_data) <= sample_rate * trim_length:
+        print("Error: File is too short to cut x seconds")
+        return signal_data
+    
+    new_data = signal_data[remove:]
+    return new_data
+
+
 async def dsp(raw_audio: io.BytesIO):
     print("Starting DSP processing...")
     
@@ -36,17 +46,15 @@ async def dsp(raw_audio: io.BytesIO):
 
     if signal_data.dtype != np.float32:
         signal_data = signal_data.astype(np.float32) / np.iinfo(signal_data.dtype).max
+
+    signal_data = trim(sample_rate,signal_data, 2) #last parameter is number of sec to remove
     
     # Define bandpass filter parameters
-    Fl, Fh = 10.0, 250.0
+    Fl, Fh = 10.0, 200.0
     WcL, WcH = Fl / (sample_rate / 2), Fh / (sample_rate / 2)  # Normalize cutoff frequencies
     
-    # Ensure cutoff frequencies are valid
-    if WcH >= 1.0:
-        WcH = 0.99  # Prevent exceeding Nyquist frequency
-    
     # Design FIR bandpass filter
-    order = 512
+    order = 1024
     bbp = fir1(order, WcL, WcH)
     
     # Apply bandpass filter
